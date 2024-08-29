@@ -1,0 +1,29 @@
+# file for transforming Depmap/CCLE files to use in my codes
+
+#get_data
+setwd("location")
+
+#to create mod version replace ")" with "" and " )" with "_"
+
+CCLE_file <- read.csv("CRISPRGeneEffect_mod.csv", header = TRUE, as.is = T)
+CCLE_file <- CCLE_file[order(CCLE_file$DepID),]
+
+t_CCLE_file <- t(CCLE_file[,2:dim(CCLE_file)[2]])
+
+
+
+first2C <- rownames(t_CCLE_file)
+
+col_one <- c()
+col_two <- c()
+
+for(i in 1:length(first2C)){
+  temp <- unlist(strsplit(first2C[i], "_"))
+  col_one[i] <- temp[1]
+  col_two[i] <- temp[2]
+}
+
+
+output <- data.frame(col_one, col_two, t_CCLE_file)
+colnames(output) <- c("gene", "esembl", CCLE_file[,1])
+write.table(output, "t_CRIPSR.txt", quote = F, row.names = F, sep = "\t")
