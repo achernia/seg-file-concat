@@ -6,6 +6,7 @@ setwd("location")
 #to create mod version replace ")" with "" and " )" with "_"
 
 CCLE_file <- read.csv("CRISPRGeneEffect_mod.csv", header = TRUE, as.is = T)
+colnames(CCLE_file)[1] <- "DepID"
 CCLE_file <- CCLE_file[order(CCLE_file$DepID),]
 
 t_CCLE_file <- t(CCLE_file[,2:dim(CCLE_file)[2]])
